@@ -1,7 +1,14 @@
-USE master;  
+USE [master]
 GO
-IF DB_ID ( N'NeedPro' ) IS NOT NULL
-DROP DATABASE NeedPro;
+/****** Object:  Database [NeedPro]    Script Date: 01/11/2020 15:34:20 ******/
+IF  EXISTS (SELECT name FROM sys.databases WHERE name = N'NeedPro')
+BEGIN
+	Drop DATABASE [NeedPro]
+	CREATE DATABASE [NeedPro]
+END
+ELSE 
+BEGIN
+	CREATE DATABASE [NeedPro]
+END
 GO
-CREATE DATABASE NeedPro;  
-GO
+
