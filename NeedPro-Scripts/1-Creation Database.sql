@@ -1,0 +1,7 @@
+USE master;  
+GO
+IF DB_ID ( N'NeedPro' ) IS NOT NULL
+DROP DATABASE NeedPro;
+GO
+CREATE DATABASE NeedPro;  
+GO
