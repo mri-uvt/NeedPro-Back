@@ -1,27 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace NeedPro_Back.Models
 {
-    public class User
+    public partial class User
     {
-		[Key]
-		public int Id { get; set; }
+        public User()
+        {
+            UserSkill = new HashSet<UserSkill>();
+        }
 
-		public string FirstName { get; set; }
-
-		public string LastName { get; set; }
-
-		public int Type { get; set; }
-
+        public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public int? Type { get; set; }
         public string Adress { get; set; }
+        public string Email { get; set; }
+        public DateTime? DateOfBirth { get; set; }
+        public string Pseudo { get; set; }
+        public string Sexe { get; set; }
+        public int? YearsOfExperience { get; set; }
+        public string Biography { get; set; }
+        public int? CityId { get; set; }
+        public int? SpecialityId { get; set; }
 
-		public string Email { get; set; }
-
-		public DateTime DateOfBirth { get; set; }
-
-	}
+        public virtual City City { get; set; }
+        public virtual Speciality Speciality { get; set; }
+        public virtual ICollection<UserSkill> UserSkill { get; set; }
+    }
 }

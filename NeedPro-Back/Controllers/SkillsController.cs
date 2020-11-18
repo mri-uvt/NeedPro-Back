@@ -11,48 +11,48 @@ namespace NeedPro_Back.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class SkillsController : ControllerBase
     {
         private readonly ApplicationContext _context;
 
-        public UsersController(ApplicationContext context)
+        public SkillsController(ApplicationContext context)
         {
             _context = context;
         }
 
-        // GET: api/Users
+        // GET: api/Skills
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUser()
+        public async Task<ActionResult<IEnumerable<Skill>>> GetSkill()
         {
-            return await _context.User.ToListAsync();
+            return await _context.Skill.ToListAsync();
         }
 
-        // GET: api/Users/5
+        // GET: api/Skills/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<Skill>> GetSkill(int id)
         {
-            var user = await _context.User.FindAsync(id);
+            var skill = await _context.Skill.FindAsync(id);
 
-            if (user == null)
+            if (skill == null)
             {
                 return NotFound();
             }
 
-            return user;
+            return skill;
         }
 
-        // PUT: api/Users/5
+        // PUT: api/Skills/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutSkill(int id, Skill skill)
         {
-            if (id != user.Id)
+            if (id != skill.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            _context.Entry(skill).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace NeedPro_Back.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
+                if (!SkillExists(id))
                 {
                     return NotFound();
                 }
@@ -73,37 +73,37 @@ namespace NeedPro_Back.Controllers
             return NoContent();
         }
 
-        // POST: api/Users
+        // POST: api/Skills
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<Skill>> PostSkill(Skill skill)
         {
-            _context.User.Add(user);
+            _context.Skill.Add(skill);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return CreatedAtAction("GetSkill", new { id = skill.Id }, skill);
         }
 
-        // DELETE: api/Users/5
+        // DELETE: api/Skills/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<User>> DeleteUser(int id)
+        public async Task<ActionResult<Skill>> DeleteSkill(int id)
         {
-            var user = await _context.User.FindAsync(id);
-            if (user == null)
+            var skill = await _context.Skill.FindAsync(id);
+            if (skill == null)
             {
                 return NotFound();
             }
 
-            _context.User.Remove(user);
+            _context.Skill.Remove(skill);
             await _context.SaveChangesAsync();
 
-            return user;
+            return skill;
         }
 
-        private bool UserExists(int id)
+        private bool SkillExists(int id)
         {
-            return _context.User.Any(e => e.Id == id);
+            return _context.Skill.Any(e => e.Id == id);
         }
     }
 }

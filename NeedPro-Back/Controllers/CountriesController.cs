@@ -11,48 +11,48 @@ namespace NeedPro_Back.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class CountriesController : ControllerBase
     {
         private readonly ApplicationContext _context;
 
-        public UsersController(ApplicationContext context)
+        public CountriesController(ApplicationContext context)
         {
             _context = context;
         }
 
-        // GET: api/Users
+        // GET: api/Countries
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUser()
+        public async Task<ActionResult<IEnumerable<Country>>> GetCountry()
         {
-            return await _context.User.ToListAsync();
+            return await _context.Country.ToListAsync();
         }
 
-        // GET: api/Users/5
+        // GET: api/Countries/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<Country>> GetCountry(int id)
         {
-            var user = await _context.User.FindAsync(id);
+            var country = await _context.Country.FindAsync(id);
 
-            if (user == null)
+            if (country == null)
             {
                 return NotFound();
             }
 
-            return user;
+            return country;
         }
 
-        // PUT: api/Users/5
+        // PUT: api/Countries/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutCountry(int id, Country country)
         {
-            if (id != user.Id)
+            if (id != country.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            _context.Entry(country).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace NeedPro_Back.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
+                if (!CountryExists(id))
                 {
                     return NotFound();
                 }
@@ -73,37 +73,37 @@ namespace NeedPro_Back.Controllers
             return NoContent();
         }
 
-        // POST: api/Users
+        // POST: api/Countries
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<Country>> PostCountry(Country country)
         {
-            _context.User.Add(user);
+            _context.Country.Add(country);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return CreatedAtAction("GetCountry", new { id = country.Id }, country);
         }
 
-        // DELETE: api/Users/5
+        // DELETE: api/Countries/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<User>> DeleteUser(int id)
+        public async Task<ActionResult<Country>> DeleteCountry(int id)
         {
-            var user = await _context.User.FindAsync(id);
-            if (user == null)
+            var country = await _context.Country.FindAsync(id);
+            if (country == null)
             {
                 return NotFound();
             }
 
-            _context.User.Remove(user);
+            _context.Country.Remove(country);
             await _context.SaveChangesAsync();
 
-            return user;
+            return country;
         }
 
-        private bool UserExists(int id)
+        private bool CountryExists(int id)
         {
-            return _context.User.Any(e => e.Id == id);
+            return _context.Country.Any(e => e.Id == id);
         }
     }
 }

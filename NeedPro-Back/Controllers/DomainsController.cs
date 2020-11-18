@@ -11,48 +11,48 @@ namespace NeedPro_Back.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class DomainsController : ControllerBase
     {
         private readonly ApplicationContext _context;
 
-        public UsersController(ApplicationContext context)
+        public DomainsController(ApplicationContext context)
         {
             _context = context;
         }
 
-        // GET: api/Users
+        // GET: api/Domains
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUser()
+        public async Task<ActionResult<IEnumerable<Domain>>> GetDomain()
         {
-            return await _context.User.ToListAsync();
+            return await _context.Domain.ToListAsync();
         }
 
-        // GET: api/Users/5
+        // GET: api/Domains/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<Domain>> GetDomain(int id)
         {
-            var user = await _context.User.FindAsync(id);
+            var domain = await _context.Domain.FindAsync(id);
 
-            if (user == null)
+            if (domain == null)
             {
                 return NotFound();
             }
 
-            return user;
+            return domain;
         }
 
-        // PUT: api/Users/5
+        // PUT: api/Domains/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutDomain(int id, Domain domain)
         {
-            if (id != user.Id)
+            if (id != domain.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            _context.Entry(domain).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace NeedPro_Back.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
+                if (!DomainExists(id))
                 {
                     return NotFound();
                 }
@@ -73,37 +73,37 @@ namespace NeedPro_Back.Controllers
             return NoContent();
         }
 
-        // POST: api/Users
+        // POST: api/Domains
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<Domain>> PostDomain(Domain domain)
         {
-            _context.User.Add(user);
+            _context.Domain.Add(domain);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return CreatedAtAction("GetDomain", new { id = domain.Id }, domain);
         }
 
-        // DELETE: api/Users/5
+        // DELETE: api/Domains/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<User>> DeleteUser(int id)
+        public async Task<ActionResult<Domain>> DeleteDomain(int id)
         {
-            var user = await _context.User.FindAsync(id);
-            if (user == null)
+            var domain = await _context.Domain.FindAsync(id);
+            if (domain == null)
             {
                 return NotFound();
             }
 
-            _context.User.Remove(user);
+            _context.Domain.Remove(domain);
             await _context.SaveChangesAsync();
 
-            return user;
+            return domain;
         }
 
-        private bool UserExists(int id)
+        private bool DomainExists(int id)
         {
-            return _context.User.Any(e => e.Id == id);
+            return _context.Domain.Any(e => e.Id == id);
         }
     }
 }

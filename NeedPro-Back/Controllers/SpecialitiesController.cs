@@ -11,48 +11,48 @@ namespace NeedPro_Back.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class SpecialitiesController : ControllerBase
     {
         private readonly ApplicationContext _context;
 
-        public UsersController(ApplicationContext context)
+        public SpecialitiesController(ApplicationContext context)
         {
             _context = context;
         }
 
-        // GET: api/Users
+        // GET: api/Specialities
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUser()
+        public async Task<ActionResult<IEnumerable<Speciality>>> GetSpeciality()
         {
-            return await _context.User.ToListAsync();
+            return await _context.Speciality.ToListAsync();
         }
 
-        // GET: api/Users/5
+        // GET: api/Specialities/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<Speciality>> GetSpeciality(int id)
         {
-            var user = await _context.User.FindAsync(id);
+            var speciality = await _context.Speciality.FindAsync(id);
 
-            if (user == null)
+            if (speciality == null)
             {
                 return NotFound();
             }
 
-            return user;
+            return speciality;
         }
 
-        // PUT: api/Users/5
+        // PUT: api/Specialities/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutSpeciality(int id, Speciality speciality)
         {
-            if (id != user.Id)
+            if (id != speciality.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            _context.Entry(speciality).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace NeedPro_Back.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
+                if (!SpecialityExists(id))
                 {
                     return NotFound();
                 }
@@ -73,37 +73,37 @@ namespace NeedPro_Back.Controllers
             return NoContent();
         }
 
-        // POST: api/Users
+        // POST: api/Specialities
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<Speciality>> PostSpeciality(Speciality speciality)
         {
-            _context.User.Add(user);
+            _context.Speciality.Add(speciality);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return CreatedAtAction("GetSpeciality", new { id = speciality.Id }, speciality);
         }
 
-        // DELETE: api/Users/5
+        // DELETE: api/Specialities/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<User>> DeleteUser(int id)
+        public async Task<ActionResult<Speciality>> DeleteSpeciality(int id)
         {
-            var user = await _context.User.FindAsync(id);
-            if (user == null)
+            var speciality = await _context.Speciality.FindAsync(id);
+            if (speciality == null)
             {
                 return NotFound();
             }
 
-            _context.User.Remove(user);
+            _context.Speciality.Remove(speciality);
             await _context.SaveChangesAsync();
 
-            return user;
+            return speciality;
         }
 
-        private bool UserExists(int id)
+        private bool SpecialityExists(int id)
         {
-            return _context.User.Any(e => e.Id == id);
+            return _context.Speciality.Any(e => e.Id == id);
         }
     }
 }
