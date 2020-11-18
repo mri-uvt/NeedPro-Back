@@ -1,0 +1,110 @@
+/* DROP Relation of country with user */
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE WHERE [TABLE_NAME] = 'User' AND [COLUMN_NAME] = 'CountryId')
+BEGIN
+    ALTER TABLE		[dbo].[User]
+	DROP CONSTRAINT	[FK_User_Country]
+END
+
+ALTER TABLE [dbo].[User]
+DROP COLUMN	[CountryId]
+
+/* Remove max from nvarchar type */
+ALTER TABLE [dbo].[Category]
+ALTER COLUMN Name NVARCHAR(255);
+
+ALTER TABLE [dbo].[City]
+ALTER COLUMN Name NVARCHAR(255);
+
+ALTER TABLE [dbo].[Country]
+ALTER COLUMN Name NVARCHAR(255);
+
+ALTER TABLE [dbo].[Skill]
+ALTER COLUMN Name NVARCHAR(255);
+
+ALTER TABLE [dbo].[Skill]
+ALTER COLUMN Description NVARCHAR(255);
+
+ALTER TABLE [dbo].[User]
+ALTER COLUMN FirstName NVARCHAR(50);
+
+ALTER TABLE [dbo].[User]
+ALTER COLUMN LastName NVARCHAR(50);
+
+ALTER TABLE [dbo].[User]
+ALTER COLUMN Type INT;
+
+ALTER TABLE [dbo].[User]
+ALTER COLUMN Adress NVARCHAR(80);
+
+ALTER TABLE [dbo].[User]
+ALTER COLUMN Email NVARCHAR(255);
+
+ALTER TABLE [dbo].[User]
+ALTER COLUMN DateOfBirth Date;
+
+/* Rename table category  */
+EXEC sp_rename 'Category', 'Domain';
+GO
+
+/* Remove the relation between user and domain*/ 
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE WHERE [TABLE_NAME] = 'User' AND [COLUMN_NAME] = 'CategoryId')
+BEGIN
+    ALTER TABLE		[dbo].[User]
+	DROP CONSTRAINT	[FK_User_Category]
+END
+
+ALTER TABLE [dbo].[User]
+DROP COLUMN	[CategoryId]
+
+/*Create table Speciality*/
+CREATE TABLE Speciality(
+	Id INT  NOT NULL IDENTITY(1,1),
+	Name Nvarchar(255),
+	DomainId INT,
+	CONSTRAINT PK_Speciality PRIMARY KEY (Id)
+);
+
+IF NOT EXISTS(SELECT * FROM INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE WHERE [TABLE_NAME] = 'Speciality' AND [COLUMN_NAME] = 'DomainId')
+BEGIN
+    ALTER TABLE		[dbo].[Speciality]
+	ADD CONSTRAINT	FK_Speciality_Domain
+	FOREIGN KEY		(DomainId) REFERENCES Domain(Id);
+END
+
+/*Add the realtion between user and specialty*/
+
+ALTER TABLE [dbo].[User]
+DROP  COLUMN		[Speciality]
+
+ALTER TABLE [dbo].[User]
+ADD 		SpecialityId INT
+
+IF NOT EXISTS(SELECT * FROM INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE WHERE [TABLE_NAME] = 'User' AND [COLUMN_NAME] = 'SpecialityId')
+BEGIN
+    ALTER TABLE		[dbo].[User]
+	ADD CONSTRAINT	FK_User_Speciality
+	FOREIGN KEY		(SpecialityId) REFERENCES Speciality(Id);
+END
+
+
+/* ADD TABLE USER_SKILL*/
+
+CREATE TABLE User_Skill(
+	UserId INT  NOT NULL,
+	SkillId INT NOT NULL,
+	CONSTRAINT PK_User_Skill PRIMARY KEY (UserId,SkillId)
+);
+
+IF NOT EXISTS(SELECT * FROM INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE WHERE [TABLE_NAME] = 'User_Skill' AND [COLUMN_NAME] = 'UserId' AND CONSTRAINT_NAME not like 'PK%')
+BEGIN
+    ALTER TABLE		[dbo].[User_Skill]
+	ADD CONSTRAINT	FK_User_Skill_User
+	FOREIGN KEY		(UserId) REFERENCES [User](Id);
+END
+
+IF NOT EXISTS(SELECT * FROM INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE WHERE [TABLE_NAME] = 'User_Skill' AND [COLUMN_NAME] = 'SkillId' AND CONSTRAINT_NAME not like 'PK%')
+BEGIN
+    ALTER TABLE		[dbo].[User_Skill]
+	ADD CONSTRAINT	FK_User_Skill_Skill
+	FOREIGN KEY		(SkillId) REFERENCES Skill(Id);
+END
