@@ -2,11 +2,7 @@
   "dependencies": {
     "mssql1": {
       "type": "mssql",
-      "connectionId": "UsersContext"
-    },
-    "mssql2": {
-      "type": "mssql",
-      "connectionId": "CitiesContext"
+      "connectionId": "ApplicationContext"
     }
   }
 }

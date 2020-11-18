@@ -1,0 +1,20 @@
+/* DROP Relation of country with user */
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE WHERE [TABLE_NAME] = 'Skill' AND [COLUMN_NAME] = 'CategoryId')
+BEGIN
+    ALTER TABLE		[dbo].[Skill]
+	DROP CONSTRAINT	[FK_Skill_Category]
+END
+
+ALTER TABLE		[dbo].[Skill]
+DROP  COLUMN	[CategoryId]
+
+ALTER TABLE [dbo].[Skill]
+ADD 		SpecialityId INT
+
+
+IF NOT EXISTS(SELECT * FROM INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE WHERE [TABLE_NAME] = 'SKill' AND [COLUMN_NAME] = 'SpecialityId')
+BEGIN
+    ALTER TABLE		[dbo].[Skill]
+	ADD CONSTRAINT	FK_Skill_Speciality
+	FOREIGN KEY		(SpecialityId) REFERENCES Speciality(Id);
+END
