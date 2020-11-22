@@ -24,7 +24,7 @@ namespace NeedPro_Back.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUser()
         {
-            return await _context.User.ToListAsync();
+            return await _context.User.Include(o => o.UserSkill).ToListAsync();
         }
 
         // GET: api/Users/5

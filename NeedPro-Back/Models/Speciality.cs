@@ -7,6 +7,7 @@ namespace NeedPro_Back.Models
     {
         public Speciality()
         {
+            Skill = new HashSet<Skill>();
             User = new HashSet<User>();
         }
 
@@ -15,6 +16,7 @@ namespace NeedPro_Back.Models
         public int? DomainId { get; set; }
 
         public virtual Domain Domain { get; set; }
+        public virtual ICollection<Skill> Skill { get; set; }
         public virtual ICollection<User> User { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace NeedPro_Back.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<City>>> GetCity()
         {
-            return await _context.City.ToListAsync();
+            return await _context.City.Include(o => o.User).ToListAsync();
         }
 
         // GET: api/Cities/5

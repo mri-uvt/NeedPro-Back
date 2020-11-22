@@ -7,7 +7,6 @@ namespace NeedPro_Back.Models
     {
         public City()
         {
-            InverseCountry = new HashSet<City>();
             User = new HashSet<User>();
         }
 
@@ -15,8 +14,7 @@ namespace NeedPro_Back.Models
         public string Name { get; set; }
         public int? CountryId { get; set; }
 
-        public virtual City Country { get; set; }
-        public virtual ICollection<City> InverseCountry { get; set; }
+        public virtual Country Country { get; set; }
         public virtual ICollection<User> User { get; set; }
     }
 }

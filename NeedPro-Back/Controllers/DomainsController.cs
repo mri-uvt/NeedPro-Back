@@ -24,7 +24,9 @@ namespace NeedPro_Back.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Domain>>> GetDomain()
         {
-            return await _context.Domain.ToListAsync();
+           
+            return await _context.Domain
+            .Include(o => o.Speciality).ToListAsync();
         }
 
         // GET: api/Domains/5

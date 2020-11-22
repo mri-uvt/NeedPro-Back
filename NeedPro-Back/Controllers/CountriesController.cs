@@ -24,7 +24,7 @@ namespace NeedPro_Back.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Country>>> GetCountry()
         {
-            return await _context.Country.ToListAsync();
+            return await _context.Country.Include(o => o.City).ToListAsync();
         }
 
         // GET: api/Countries/5

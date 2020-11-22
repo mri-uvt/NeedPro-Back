@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace NeedPro_Back
 {
     public class Startup
@@ -26,8 +27,15 @@ namespace NeedPro_Back
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-
+            //services.AddControllers();
+            //services.AddControllers().AddNewtonsoftJson();
+            //   services.AddMvc().AddNewtonsoftJson(options =>
+            //    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            //);
+            services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
+            //            services.AddMvc().AddJsonOptions(options => options.SerializerSettings = new CustomSettings());
             services.AddDbContext<ApplicationContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("NeedProConnection")));
         }
@@ -46,7 +54,7 @@ namespace NeedPro_Back
                .AllowAnyHeader());    
             
             app.UseHttpsRedirection();
-
+           
             app.UseRouting();
 
             app.UseAuthorization();

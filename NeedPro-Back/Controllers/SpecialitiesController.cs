@@ -24,7 +24,9 @@ namespace NeedPro_Back.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Speciality>>> GetSpeciality()
         {
-            return await _context.Speciality.ToListAsync();
+            return await _context.Speciality
+                 .Include(o => o.User) 
+                 .Include(o => o.Skill).ToListAsync();
         }
 
         // GET: api/Specialities/5
